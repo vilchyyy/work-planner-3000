@@ -1,4 +1,4 @@
-import Navigation from "./Navigation";
+import Navigation from "./Navigation/Navigation";
 
 type LayoutProps = {
     children?: React.ReactNode;
@@ -6,10 +6,10 @@ type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
-    <>
+    <div className="flex">
         <Navigation/>
         <main> {children} </main>
-    </>
+    </div>
     )
 }
 
