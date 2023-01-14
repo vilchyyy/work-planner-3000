@@ -15,7 +15,6 @@ const Navigation: React.FC = () => {
     }
 
     return (
-        <>
             <nav className="flex gap-4 justify-between flex-col border-black border h-screen w-min lg:w-60 bg-neutral-800 text-white p-4  ">
                 <NavSegment> 
                     <p className="w-full text-center text-xl font-semibold tracking-wider mb-2 mt-2 hidden lg:block">Work planner 3000</p>
@@ -37,14 +36,10 @@ const Navigation: React.FC = () => {
                         :
                         <NavElement onClick={handleLogin} className="gap-3.5" link="#" icon={ <IconLogin className="ml-0.5" /> } text="Log in" />
                     }
-                    
-                    
+                             
                 </NavSegment>
-
-                
-                
             </nav>
-        </>
+
     )
 }
 

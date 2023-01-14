@@ -24,14 +24,11 @@ const NavElement: React.FC<NavElementProps> = (props) => {
     }
         
     return (
-        <>
+
             <div onClick={ handleClick } className={`flex gap-4 hover:bg-neutral-700 transition rounded w-full p-3 h-min cursor-pointer ${props.className ?? ""}`}>
                 {props.icon}
                 <p className="hidden lg:block ">{props.text}</p>
-
             </div>
-            
-        </>
     )
 }
 

@@ -1,12 +1,28 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
 import Layout from "../components/Layout";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
+
+  const router = useRouter();
+  const configRequired = api.users.configRequired.useQuery().data;
+
+  useEffect(() => {
+    if (configRequired) {
+      router.push("/configure")
+      .catch((err) => {
+        console.error(err);
+      })
+    }
+  }, [router, configRequired]);
+
+
 
   return (
     <>
@@ -26,12 +42,13 @@ const Home: NextPage = () => {
 export default Home;
 
 const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
-
+  const { data: sessionData } = useSession()
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
     { enabled: sessionData?.user !== undefined },
   );
+
+
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
@@ -39,12 +56,6 @@ const AuthShowcase: React.FC = () => {
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
-      <button
-        className="rounded-full bg-black px-10 py-3 font-semibold text-white no-underline transition"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
     </div>
   );
 };

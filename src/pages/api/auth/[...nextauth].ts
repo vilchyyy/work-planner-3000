@@ -15,6 +15,14 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    signIn({ email }) {
+      // Allow only users with the email address
+      if (email) {
+        return true;
+      } else {
+        return "/errors/no-email";
+      }
+    },
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
