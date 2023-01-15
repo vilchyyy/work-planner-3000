@@ -1,10 +1,11 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import EmailProvider from "next-auth/providers/email";
-import { env } from "../../../env/server.mjs";
-import { prisma } from "../../../server/db";
+import { prisma } from "../../../server/db"; 
+import { api } from "../../../utils/api";
+import { usersRouter } from "../../../server/api/routers/users";
+import { createInnerTRPCContext } from "../../../server/api/trpc";
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -15,25 +16,25 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    signIn({ email }) {
-      // Allow only users with the email address
-      if (email) {
-        return true;
+    async signIn({ user }) {
+      // If the user is not verified, don't let them sign in
+      const ctx =  createInnerTRPCContext({ session: null });
+      const userCaller = usersRouter.createCaller(ctx);
+      const data = await userCaller.isApproved({ id: user.id });
+      if (!data?.verified) {
+        return false;
       } else {
-        return "/errors/no-email";
+        return true;
       }
+      
     },
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),
     EmailProvider({
       server: {
-        host: process.env.EMAIL_SERVER_HOST,
+        host: process.env.EMAIL_SERVER_HOST, 
         port: process.env.EMAIL_SERVER_PORT,
         auth: {
           user: process.env.EMAIL_SERVER_USER,
