@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
-const noEmail: NextPage = () => {
+const Employees: NextPage = () => {
+
     return (
       <>
         <Head>
@@ -10,7 +11,7 @@ const noEmail: NextPage = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <p>
-            Podany adres email nie istnieje w bazie danych. Spróbuj ponownie.
+          
         </p>
             
         
@@ -18,5 +19,5 @@ const noEmail: NextPage = () => {
     );
   };
   
-  export default noEmail;
+  export default Employees;
   

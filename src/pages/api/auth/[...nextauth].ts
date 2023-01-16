@@ -1,11 +1,11 @@
+import { caller, usersRouter } from "../../../server/api/routers/users";
 import NextAuth, { type NextAuthOptions } from "next-auth";
-// Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import EmailProvider from "next-auth/providers/email";
 import { prisma } from "../../../server/db"; 
 import { api } from "../../../utils/api";
-import { usersRouter } from "../../../server/api/routers/users";
-import { createInnerTRPCContext } from "../../../server/api/trpc";
+
+
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -18,15 +18,15 @@ export const authOptions: NextAuthOptions = {
     },
     async signIn({ user }) {
       // If the user is not verified, don't let them sign in
-      const ctx =  createInnerTRPCContext({ session: null });
-      const userCaller = usersRouter.createCaller(ctx);
-      const data = await userCaller.isApproved({ id: user.id });
+      // const data = api.users.isApproved.useQuery({ id: user.id });
+      // const ctx =  createInnerTRPCContext({ session: null });
+      // const caller = usersRouter.createCaller(ctx);
+      const data = await caller.isApproved({ id: user.id });
       if (!data?.verified) {
         return false;
       } else {
         return true;
       }
-      
     },
   },
   // Configure one or more authentication providers

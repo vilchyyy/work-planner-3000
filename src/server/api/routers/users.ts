@@ -1,6 +1,6 @@
+import { createInnerTRPCContext } from "../../../server/api/trpc";
 import { z } from "zod";
 import { configurationValidationSchema } from "../../../pages/configure";
-
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const usersRouter = createTRPCRouter({
@@ -40,3 +40,5 @@ export const usersRouter = createTRPCRouter({
 });
 
 
+const ctx =  createInnerTRPCContext({ session: null });
+export const caller = usersRouter.createCaller(ctx);

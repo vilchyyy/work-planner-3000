@@ -5,23 +5,20 @@ import { useSession } from "next-auth/react";
 import { api } from "../utils/api";
 import Layout from "../components/Layout";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   const router = useRouter();
-  const configRequired = api.users.configRequired.useQuery().data;
+  const configRequired = api.users.configRequired.useQuery();
 
-  useEffect(() => {
-    if (configRequired) {
-      router.push("/configure")
-      .catch((err) => {
-        console.error(err);
-      })
-    }
-  }, [router, configRequired]);
-
+  
+  if (configRequired.data) {
+    router.push("/configure")
+    .catch((err) => {
+      console.error(err);
+    })
+  }
 
 
   return (
