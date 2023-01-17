@@ -1,10 +1,8 @@
-import { caller, usersRouter } from "../../../server/api/routers/users";
+// import { caller, usersRouter } from "../../../server/api/routers/users";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import EmailProvider from "next-auth/providers/email";
 import { prisma } from "../../../server/db"; 
-import { api } from "../../../utils/api";
-
 
 
 export const authOptions: NextAuthOptions = {
@@ -12,17 +10,14 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
       if (session.user) {
+        session.user.role = user.role;
         session.user.id = user.id;
+        session.user.verified = user.verified;
       }
       return session;
     },
-    async signIn({ user }) {
-      // If the user is not verified, don't let them sign in
-      // const data = api.users.isApproved.useQuery({ id: user.id });
-      // const ctx =  createInnerTRPCContext({ session: null });
-      // const caller = usersRouter.createCaller(ctx);
-      const data = await caller.isApproved({ id: user.id });
-      if (!data?.verified) {
+    signIn({ user }) {
+      if (!user.verified) {
         return false;
       } else {
         return true;

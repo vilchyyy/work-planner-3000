@@ -1,7 +1,8 @@
-import { createInnerTRPCContext } from "../../../server/api/trpc";
+import { Role } from "@prisma/client";
 import { z } from "zod";
 import { configurationValidationSchema } from "../../../pages/configure";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { addEmployeeValidationSchema } from "../../../pages/employees/add";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const usersRouter = createTRPCRouter({
 
@@ -25,20 +26,35 @@ export const usersRouter = createTRPCRouter({
       if (await ctx.prisma.user.count() === 0) {
         const user = await ctx.prisma.user.create({
             data: {
-            name: input.name,
-            email: input.email,
-            role: 'SUPER',
-            verified: true,
+              name: input.name,
+              email: input.email,
+              role: 'SUPER',
+              verified: true,
             },
         });
         return user;
       } else {
         throw new Error('There is already a super user');
       }
-    })
+    }),
 
+    createUser: protectedProcedure
+        .input(addEmployeeValidationSchema)
+        .mutation(async ({ ctx, input }) => {
+          if (ctx.session.user.role === Role.USER) throw new Error('You do not have permission to do this')
+            const user = await ctx.prisma.user.create({
+                data: {
+                  name: input.name,
+                  email: input.email,
+                  role: input.role,
+                  verified: true,
+                },
+            });
+            return user;
+        }),
+
+    getUsers: protectedProcedure
+        .query(async ({ ctx }) => {
+            return await ctx.prisma.user.findMany();
+        }),
 });
-
-
-const ctx =  createInnerTRPCContext({ session: null });
-export const caller = usersRouter.createCaller(ctx);

@@ -22,8 +22,8 @@ const Navigation: React.FC = () => {
                     <NavElement link="#" icon={ <IconBrowser/> } text="Dashboard" />
                     <NavElement link="#" icon={ <IconLayoutGrid/> } text="Projects" />
                     <NavElement link="#" icon={ <IconLayoutGridAdd/> } text="Add Project" />
-                    <NavElement link="#" icon={ <IconUsers/> } text="Employees" />
-                    <NavElement link="#" icon={ <IconUserPlus/> } text="Add Employee" />
+                    <NavElement link="/employees" icon={ <IconUsers/> } text="Employees" />
+                    <NavElement link="/employees/add" icon={ <IconUserPlus/> } text="Add Employee" />
                     <NavElement link="#" icon={ <IconBeach/> } text="Manage Days Off" />
                 </NavSegment>
 
