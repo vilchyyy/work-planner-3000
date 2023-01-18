@@ -13,6 +13,7 @@ export const authOptions: NextAuthOptions = {
         session.user.role = user.role;
         session.user.id = user.id;
         session.user.verified = user.verified;
+        session.user.permissions = user.permissions;
       }
       return session;
     },

@@ -3,26 +3,27 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { z } from "zod";
-import Form from "../../components/Form/Form";
-import Layout from "../../components/Layout";
-import Title from "../../components/Title";
-import { api } from "../../utils/api";
+import Form from "../../../components/Form/Form";
+import Layout from "../../../components/Layout";
+import Title from "../../../components/Title";
+import { api } from "../../../utils/api";
 
 
-export const addEmployeeValidationSchema = z.object({
+export const editEmployeeSchema = z.object({
     name: z.string().min(2).max(20) ,
     email: z.string().email().max(30),
     role: z.enum([Role.ADMIN, Role.USER, Role.SUPER]),
     permissions: z.number().min(0).max(3).optional(),
+    
 })
 
-const AddEmployee: NextPage = () => {
+const EditEmployee: NextPage = () => {
 
     const { data: session, status } = useSession();
     console.log(session, status)
     const mutation = api.users.createUser.useMutation()
 
-    const handleSubmit = (data: z.infer<typeof addEmployeeValidationSchema> ) => {
+    const handleSubmit = (data: z.infer<typeof editEmployeeSchema> ) => {
         mutation.mutate(data)
         if (mutation.isSuccess) {
             console.log("Success!")
@@ -54,10 +55,10 @@ const AddEmployee: NextPage = () => {
         <Layout>
             
             <div className="grid m-6">
-                <Title>Add a new employee</Title>
+                <Title>Edit an employee</Title>
                 <div className="w-96">
                     <Form 
-                            schema={addEmployeeValidationSchema}
+                            schema={editEmployeeSchema}
                             onSubmit={handleSubmit}
                             renderAfter={() => <button className="w-full mt-2 bg-neutral-700 p-2.5 rounded text-white hover:bg-stone-800 hover:scale-105 transition" >Submit</button>}
                             props = {{
@@ -89,5 +90,5 @@ const AddEmployee: NextPage = () => {
     );
   };
   
-  export default AddEmployee;
+  export default EditEmployee;
   

@@ -1,13 +1,14 @@
 import { createTsForm } from "@ts-react/form";
 import { z } from "zod";
+import NumberField from "./NumberField";
 import SelectField from "./SelectField";
 import TextField from "./TextField";
 
 const mapping = [
     [z.string(), TextField],
-    [z.enum(["a"]), SelectField]
+    [z.enum(["a"]), SelectField],
     // [z.boolean(), CheckBoxField],
-    // [z.number(), NumberField],
+    [z.number(), NumberField],
   ] as const; 
   
   // A typesafe React component

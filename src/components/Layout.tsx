@@ -8,7 +8,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
     <div className="flex">
         <Navigation/>
-        <main> {children} </main>
+        <main className="w-full h-full " > {children} </main>
     </div>
     )
 }

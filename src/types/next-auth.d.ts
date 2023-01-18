@@ -9,6 +9,7 @@ declare module "next-auth" {
       id: string;
       role: string;
       verified: boolean;
+      permissions: number;
     } & DefaultSession["user"];
   }
 
@@ -16,5 +17,6 @@ declare module "next-auth" {
     id: string;
     role: string;
     verified: boolean;
+    permissions: number;
   }
 }

@@ -1,21 +1,22 @@
 import { useTsController } from "@ts-react/form";
 
-type TextFieldProps = {
+type NumberFieldProps = {
   placeholder?: string;
   className?: string;
   label?: string;
 };
 
-function TextField({ placeholder, className, label }: TextFieldProps) {
+function NumberField({ placeholder, className, label }: NumberFieldProps) {
   const { field, error } = useTsController<string>();
   return (
     <>
       {label && <label className="block text-sm font-medium text-gray-700">{label}</label>}
-      <input
+      <input 
+        type="number"
         className={`form-control  mb-2 block w-full rounded border border-solid border-gray-300 px-3 py-1.5 transition ${
           error?.errorMessage ? "border-red-600" : "border-gray-300"
         } ${className ?? ""}`}
-        value={field.value ?? ""} // conditional to prevent "uncontrolled to controlled" react warning
+        value={field.value ?? 0} // conditional to prevent "uncontrolled to controlled" react warning
         placeholder={placeholder}
         onChange={(e) => {
           field.onChange(e.target.value);
@@ -28,4 +29,4 @@ function TextField({ placeholder, className, label }: TextFieldProps) {
   );
 }
 
-export default TextField;
+export default NumberField;
