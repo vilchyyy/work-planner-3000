@@ -79,9 +79,11 @@ const AddEmployee: NextPage = () => {
                             }}
 
                         />
+                        {mutation.isError && <p className="text-red-500">{mutation.error?.message}</p>}
+                        {mutation.isSuccess && <p className="text-green-500">Success!</p>}
                 </div>  
-            </div>
 
+            </div>
         </Layout>
             
         

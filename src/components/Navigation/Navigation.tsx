@@ -1,5 +1,5 @@
 import NavElement from "./NavElement/NavElement"
-import { IconBrowser, IconUsers, IconUserPlus, IconUserCircle, IconLogout, IconLayoutGrid, IconLayoutGridAdd, IconBeach, IconLogin  } from '@tabler/icons';
+import { IconBrowser, IconUsers, IconUserPlus, IconUserCircle, IconLogout, IconLayoutGrid, IconLayoutGridAdd, IconLogin  } from '@tabler/icons';
 import NavSegment from "./NavSegment/NavSegment";
 import { signIn, signOut, useSession } from "next-auth/react";
 
@@ -24,7 +24,6 @@ const Navigation: React.FC = () => {
                     <NavElement link="#" icon={ <IconLayoutGridAdd/> } text="Add Project" />
                     <NavElement link="/employees" icon={ <IconUsers/> } text="Employees" />
                     <NavElement link="/employees/add" icon={ <IconUserPlus/> } text="Add Employee" />
-                    <NavElement link="#" icon={ <IconBeach/> } text="Manage Days Off" />
                 </NavSegment>
 
                 <NavSegment>

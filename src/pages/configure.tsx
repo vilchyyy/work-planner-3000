@@ -55,6 +55,7 @@ const Configure: NextPage = () => {
               },
             }}
           />
+          {mutation.isLoading && <p>Submitting...</p>}
           {message && <p>{message}</p>}
         </div>
       </div>

@@ -4,9 +4,10 @@ type SelectFieldProps = {
   className?: string;
   options: string[];
   label?: string;
+  defaultValue?: string;
 };
 
-function SelectField({ className, options, label }: SelectFieldProps) {
+function SelectField({ className, options, label, defaultValue }: SelectFieldProps) {
   const { field, error } = useTsController<string>();
   return (
     <>
@@ -16,7 +17,7 @@ function SelectField({ className, options, label }: SelectFieldProps) {
       text-gray-700 transition focus:border-neutral-900 mb-3 ${
         className ?? ""
       }`}
-        value={field.value ? field.value : "none"}
+        value={field.value ?? defaultValue ?? "none"}
         onChange={(e) => {
           field.onChange(e.target.value);
         }}
