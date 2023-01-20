@@ -20,8 +20,8 @@ const Navigation: React.FC = () => {
                     <p className="w-full text-center text-xl font-semibold tracking-wider mb-2 mt-2 hidden lg:block">Work planner 3000</p>
                     <p className="w-full text-center text-xl font-semibold tracking-wider mb-2 mt-2 lg:hidden">3000</p>
                     <NavElement link="#" icon={ <IconBrowser/> } text="Dashboard" />
-                    <NavElement link="#" icon={ <IconLayoutGrid/> } text="Projects" />
-                    <NavElement link="#" icon={ <IconLayoutGridAdd/> } text="Add Project" />
+                    <NavElement link="/projects" icon={ <IconLayoutGrid/> } text="Projects" />
+                    <NavElement link="/projects/add" icon={ <IconLayoutGridAdd/> } text="Add Project" />
                     <NavElement link="/employees" icon={ <IconUsers/> } text="Employees" />
                     <NavElement link="/employees/add" icon={ <IconUserPlus/> } text="Add Employee" />
                 </NavSegment>

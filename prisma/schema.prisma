@@ -58,6 +58,17 @@ model User {
     role          Role      @default(USER)
     permissions   Int       @default(0)
     verified      Boolean   @default(false)
+    projects      Project[]
+}
+
+model Project {
+    id        String   @id @default(cuid())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    start     DateTime
+    end       DateTime
+    members   User[]
 }
 
 enum Role {
