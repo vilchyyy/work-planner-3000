@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { editSelfSchema } from "../../../pages/account";
 import { configurationValidationSchema } from "../../../pages/configure";
 import { addEmployeeValidationSchema } from "../../../pages/employees/add";
 import { editEmployeeSchema } from "../../../pages/employees/edit/[id]";
@@ -22,6 +23,20 @@ export const usersRouter = createTRPCRouter({
           email: input.email,
           role: input.role,
           permissions: perms,
+        },
+      });
+    }),
+
+    editSelf: protectedProcedure
+    .input(editSelfSchema)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          name: input.name,
+          email: input.email,
         },
       });
     }),

@@ -27,7 +27,7 @@ const Navigation: React.FC = () => {
                 </NavSegment>
 
                 <NavSegment>
-                    <NavElement link="#" icon={ <IconUserCircle/> } text="My Account" />
+                    <NavElement link="/account" icon={ <IconUserCircle/> } text="My Account" />
 
                     {
                         sessionData ? 
