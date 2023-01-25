@@ -19,7 +19,7 @@ const Navigation: React.FC = () => {
                 <NavSegment> 
                     <p className="w-full text-center text-xl font-semibold tracking-wider mb-2 mt-2 hidden lg:block">Work planner 3000</p>
                     <p className="w-full text-center text-xl font-semibold tracking-wider mb-2 mt-2 lg:hidden">3000</p>
-                    <NavElement link="#" icon={ <IconBrowser/> } text="Dashboard" />
+                    <NavElement link="/dashboard" icon={ <IconBrowser/> } text="Dashboard" />
                     <NavElement link="/projects" icon={ <IconLayoutGrid/> } text="Projects" />
                     <NavElement link="/projects/add" icon={ <IconLayoutGridAdd/> } text="Add Project" />
                     <NavElement link="/employees" icon={ <IconUsers/> } text="Employees" />
